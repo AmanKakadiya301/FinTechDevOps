@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Configuration Ashwin Suthar MT2025024 - IIIT B SPE Major project FinTech JavaSpringBoot PythonFastAPI DevOps
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 LOG_DIR="logs"
 mkdir -p "$LOG_DIR"
 
