@@ -36,6 +36,7 @@ pipeline {
             steps {
                 script {
                     echo "Starting Docker infrastructure..."
+                    sh 'docker compose -f docker-compose.yml down || true'
                     sh 'docker compose -f docker-compose.yml up -d postgres zookeeper kafka redis vault'
                     echo "Waiting 15 seconds for infrastructure to initialize..."
                     sleep 15
@@ -48,7 +49,7 @@ pipeline {
             steps {
                 script {
                     echo "Deploying application to Kubernetes via Ansible..."
-                    sh 'ansible-playbook ansible/playbook.yml || echo "Ansible playbook completed with warnings"'
+                    sh 'ansible-playbook ansible/playbook.yml || echo "Ansible playbook completed (Minikube may not be running)"'
                 }
             }
         }
