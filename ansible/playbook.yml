@@ -1,0 +1,6 @@
+---
+- name: Deploy Kubernetes Infrastructure
+  hosts: localhost
+  connection: local
+  roles:
+    - k8s-deploy

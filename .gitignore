@@ -1,0 +1,5 @@
+frontend-react/node_modules/
+price-prediction/venv/
+logs/
+logs/frontend.log
+price-prediction/__pycache__/
