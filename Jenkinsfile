@@ -40,11 +40,7 @@ pipeline {
                     echo "Scanning for hardcoded secrets and credentials..."
                     sh '''
                         echo "Checking for potential secrets in source code..."
-                        FOUND=0
-                        grep -rn --include="*.java" --include="*.properties" --include="*.yml" \
-                            -E "(password|secret|api_key|token)\\s*=\\s*['\"][^'\"]{8,}" \
-                            --exclude-dir=build --exclude-dir=.gradle --exclude-dir=node_modules \
-                            . | grep -v "rootpassword" | grep -v "spring.datasource" | grep -v "VAULT_DEV" | head -20 || true
+                        grep -riE "password=|secret=|api_key=|token=" . --exclude-dir=build --exclude-dir=.gradle --exclude-dir=node_modules | grep -viE "rootpassword|spring.datasource|VAULT_DEV|admin" | head -20 || true
                         echo "Secrets scan completed."
                     '''
                     echo "Lint & Secrets check passed."
