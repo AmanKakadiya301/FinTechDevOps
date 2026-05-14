@@ -8,6 +8,10 @@ pipeline {
         GIT_URL = 'https://github.com/AmanKakadiya301/FinTechDevOps.git'
     }
 
+    triggers {
+        githubPush()
+    }
+
     stages {
 
         stage('Checkout') {
@@ -147,9 +151,15 @@ pipeline {
     post {
         success {
             echo 'Pipeline completed successfully!'
+            emailext body: "Build Successful: ${env.JOB_NAME} - ${env.BUILD_NUMBER}\nCheck console: ${env.BUILD_URL}",
+                     subject: "Jenkins Build SUCCESS: ${env.JOB_NAME}",
+                     to: 'kakadiyaaman2004@gmail.com'
         }
         failure {
             echo 'Pipeline failed. Check logs for details.'
+            emailext body: "Build Failed: ${env.JOB_NAME} - ${env.BUILD_NUMBER}\nCheck console: ${env.BUILD_URL}",
+                     subject: "Jenkins Build FAILURE: ${env.JOB_NAME}",
+                     to: 'kakadiyaaman2004@gmail.com'
         }
     }
 }

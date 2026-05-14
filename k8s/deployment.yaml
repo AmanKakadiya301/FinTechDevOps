@@ -1,4 +1,3 @@
----
 apiVersion: v1
 kind: Service
 metadata:
@@ -522,7 +521,9 @@ spec:
             secretKeyRef:
               key: db_password
               name: vault-keys
-        image: ashwins1/spe-stocksys-mjproj:spestocksys-config-server
+        - name: LOGSTASH_HOST
+          value: logstash
+        image: amankakadiya301/fintechdevops:config-server
         imagePullPolicy: IfNotPresent
         name: config-server
         ports:
@@ -578,7 +579,9 @@ spec:
             secretKeyRef:
               key: db_password
               name: vault-keys
-        image: ashwins1/spe-stocksys-mjproj:spestocksys-eureka-server
+        - name: LOGSTASH_HOST
+          value: logstash
+        image: amankakadiya301/fintechdevops:eureka-server
         imagePullPolicy: IfNotPresent
         name: eureka-server
         ports:
@@ -636,7 +639,9 @@ spec:
             secretKeyRef:
               key: db_password
               name: vault-keys
-        image: ashwins1/spe-stocksys-mjproj:spestocksys-api-gateway
+        - name: LOGSTASH_HOST
+          value: logstash
+        image: amankakadiya301/fintechdevops:api-gateway
         imagePullPolicy: IfNotPresent
         name: api-gateway
         ports:
@@ -692,7 +697,9 @@ spec:
             secretKeyRef:
               key: db_password
               name: vault-keys
-        image: ashwins1/spe-stocksys-mjproj:spestocksys-user-service
+        - name: LOGSTASH_HOST
+          value: logstash
+        image: amankakadiya301/fintechdevops:user-service
         imagePullPolicy: IfNotPresent
         name: user-service
         ports:
@@ -748,7 +755,9 @@ spec:
             secretKeyRef:
               key: db_password
               name: vault-keys
-        image: ashwins1/spe-stocksys-mjproj:spestocksys-order-service
+        - name: LOGSTASH_HOST
+          value: logstash
+        image: amankakadiya301/fintechdevops:order-service
         imagePullPolicy: IfNotPresent
         name: order-service
         ports:
@@ -804,7 +813,9 @@ spec:
             secretKeyRef:
               key: db_password
               name: vault-keys
-        image: ashwins1/spe-stocksys-mjproj:spestocksys-portfolio-service
+        - name: LOGSTASH_HOST
+          value: logstash
+        image: amankakadiya301/fintechdevops:portfolio-service
         imagePullPolicy: IfNotPresent
         name: portfolio-service
         ports:
@@ -860,7 +871,9 @@ spec:
             secretKeyRef:
               key: db_password
               name: vault-keys
-        image: ashwins1/spe-stocksys-mjproj:spestocksys-market-data
+        - name: LOGSTASH_HOST
+          value: logstash
+        image: amankakadiya301/fintechdevops:market-data
         imagePullPolicy: IfNotPresent
         name: market-data
         ports:
@@ -916,7 +929,9 @@ spec:
             secretKeyRef:
               key: db_password
               name: vault-keys
-        image: ashwins1/spe-stocksys-mjproj:spestocksys-notification-service
+        - name: LOGSTASH_HOST
+          value: logstash
+        image: amankakadiya301/fintechdevops:notification-service
         imagePullPolicy: IfNotPresent
         name: notification-service
         ports:
@@ -972,7 +987,9 @@ spec:
             secretKeyRef:
               key: db_password
               name: vault-keys
-        image: ashwins1/spe-stocksys-mjproj:spestocksys-risk-service
+        - name: LOGSTASH_HOST
+          value: logstash
+        image: amankakadiya301/fintechdevops:risk-service
         imagePullPolicy: IfNotPresent
         name: risk-service
         ports:
@@ -1028,7 +1045,7 @@ spec:
             secretKeyRef:
               key: db_password
               name: vault-keys
-        image: ashwins1/spe-stocksys-mjproj:spestocksys-price-prediction
+        image: amankakadiya301/fintechdevops:price-prediction
         imagePullPolicy: IfNotPresent
         name: price-prediction
         ports:
@@ -1086,7 +1103,7 @@ spec:
             secretKeyRef:
               key: db_password
               name: vault-keys
-        image: ashwins1/spe-stocksys-mjproj:spestocksys-frontend-react
+        image: amankakadiya301/fintechdevops:frontend-react
         imagePullPolicy: IfNotPresent
         name: frontend-react
         ports:

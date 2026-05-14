@@ -2,5 +2,7 @@
 - name: Deploy Kubernetes Infrastructure
   hosts: localhost
   connection: local
+  vars_files:
+    - vars/secrets.yml
   roles:
     - k8s-deploy

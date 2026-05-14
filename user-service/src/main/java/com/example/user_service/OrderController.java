@@ -22,10 +22,46 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public Order placeOrder(@RequestBody Order order) {
+    public org.springframework.http.ResponseEntity<?> placeOrder(@RequestBody Order order) {
         if (order.getType() == null) order.setType("BUY");
         if (order.getTimestamp() == null) order.setTimestamp(java.time.LocalDateTime.now());
-        return orderRepository.save(order);
+        if (order.getPrice() == null) order.setPrice(100.0);
+        if (order.getQuantity() == null) order.setQuantity(10);
+        
+        List<Order> userOrders = orderRepository.findByUsername(order.getUsername());
+        
+        double currentBalance = 100000.0;
+        int currentHoldings = 0;
+        
+        for (Order o : userOrders) {
+            double total = (o.getPrice() != null ? o.getPrice() : 100.0) * (o.getQuantity() != null ? o.getQuantity() : 10);
+            if ("BUY".equalsIgnoreCase(o.getType())) {
+                currentBalance -= total;
+                if (order.getTicker().equals(o.getTicker())) {
+                    currentHoldings += o.getQuantity();
+                }
+            } else {
+                currentBalance += total;
+                if (order.getTicker().equals(o.getTicker())) {
+                    currentHoldings -= o.getQuantity();
+                }
+            }
+        }
+        
+        double orderTotal = order.getPrice() * order.getQuantity();
+        
+        if ("BUY".equalsIgnoreCase(order.getType())) {
+            if (currentBalance < orderTotal) {
+                return org.springframework.http.ResponseEntity.badRequest().body(Map.of("message", "Insufficient funds. Available balance: $" + currentBalance));
+            }
+        } else if ("SELL".equalsIgnoreCase(order.getType())) {
+            if (currentHoldings < order.getQuantity()) {
+                return org.springframework.http.ResponseEntity.badRequest().body(Map.of("message", "Insufficient holdings. You only own " + currentHoldings + " units of " + order.getTicker()));
+            }
+        }
+        
+        Order savedOrder = orderRepository.save(order);
+        return org.springframework.http.ResponseEntity.ok(savedOrder);
     }
 
     @GetMapping("/portfolio")
@@ -37,7 +73,7 @@ public class OrderController {
             orders = orderRepository.findAll();
         }
         
-        double initialBalance = 15000.0;
+        double initialBalance = 100000.0;
         double currentBalance = initialBalance;
 
         for (Order order : orders) {
