@@ -2,7 +2,7 @@ import random
 import csv
 import os
 
-# 50 Companies (US and India mixed)
+# 50 Companies (US & India mixed)
 companies = [
     # US Stocks
     ('AAPL', 150.0), ('MSFT', 310.0), ('GOOGL', 2800.0), ('AMZN', 130.0), ('TSLA', 220.0),
