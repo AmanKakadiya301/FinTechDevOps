@@ -7,7 +7,6 @@ pipeline {
         DOCKER_REPO = 'amankakadiya301/fintechdevops'
         GIT_URL = 'https://github.com/AmanKakadiya301/FinTechDevOps.git'
     }
-
     triggers {
         githubPush()
     }
